@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Dış daire -->
+    <path
+        android:pathData="M50,5 A45,45 0 1,1 49.999,5"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="5"
+        android:fillColor="@android:color/transparent" />
+
+    <!-- Oynat simgesi (üçgen) -->
+    <path
+        android:pathData="M38,30 L70,50 L38,70 Z"
+        android:fillColor="#FFFFFF" />
+</vector>
