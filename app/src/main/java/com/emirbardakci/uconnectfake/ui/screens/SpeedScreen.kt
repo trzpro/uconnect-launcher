@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,12 +35,28 @@ import com.emirbardakci.uconnectfake.ui.theme.UconnectTextWhite
 import com.emirbardakci.uconnectfake.ui.screens.checkLocationPermission
 import com.emirbardakci.uconnectfake.ui.screens.formatSpeed
 import com.emirbardakci.uconnectfake.ui.screens.startLocationUpdates
+import com.emirbardakci.uconnectfake.utils.loadAppConfig
+// SettingsManager ve BottomBarPosition aynı pakette, ama açıkça referans edelim
+import com.emirbardakci.uconnectfake.ui.screens.SettingsManager
+import com.emirbardakci.uconnectfake.ui.screens.BottomBarPosition
 
 @Composable
 fun SpeedScreen(onBackClick: () -> Unit) {
     val context = LocalContext.current
     var currentSpeed by remember { mutableStateOf(0.0f) }
     var hasLocationPermission by remember { mutableStateOf(false) }
+    val appConfig = remember { loadAppConfig(context) }
+    
+    // Bottom bar pozisyonunu ayarlardan oku
+    var bottomBarPosition by remember { mutableStateOf(SettingsManager.getBottomBarPosition(context)) }
+    
+    // Ayarlar değiştiğinde bottom bar pozisyonunu güncelle
+    LaunchedEffect(Unit) {
+        bottomBarPosition = SettingsManager.getBottomBarPosition(context)
+    }
+    
+    // Geri tuşu davranışı
+    BackHandler(onBack = onBackClick)
     
     // Yatay gradyan (kırmızı çizgi) için brush
     val horizontalGradientBrush = Brush.horizontalGradient(
@@ -80,6 +97,43 @@ fun SpeedScreen(onBackClick: () -> Unit) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
+            // Bottom bar üstte ise önce bottom bar'ı göster
+            if (bottomBarPosition == BottomBarPosition.TOP) {
+                UconnectBottomBar(
+                    bottomBarApps = appConfig.bottomBarApps.toMutableList(),
+                    appsList = appConfig.apps,
+                    onAppClick = { app ->
+                        when {
+                            app.action == "open_speed_screen" -> {
+                                // Zaten speed ekranındayız, bir şey yapma
+                            }
+                            app.action == "open_apps_screen" -> {
+                                // Apps ekranına git
+                                val intent = Intent(context, MainActivity::class.java).apply {
+                                    putExtra("screen", "apps")
+                                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                }
+                                context.startActivity(intent)
+                            }
+                            !app.packageName.isNullOrEmpty() -> {
+                                // Uygulamayı başlat
+                                val launchIntent = context.packageManager.getLaunchIntentForPackage(app.packageName)
+                                if (launchIntent != null) {
+                                    launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    context.startActivity(launchIntent)
+                                }
+                            }
+                            !app.action.isNullOrEmpty() -> {
+                                // Sistem ayarlarını aç
+                                val intent = Intent(app.action)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                context.startActivity(intent)
+                            }
+                        }
+                    }
+                )
+            }
+            
             // Top bar
             Box(
                 modifier = Modifier
@@ -157,38 +211,42 @@ fun SpeedScreen(onBackClick: () -> Unit) {
                 }
             }
             
-            // Bottom bar
-            UconnectBottomBar(
-                onAppClick = { app ->
-                    when {
-                        app.action == "open_speed_screen" -> {
-                            // Zaten speed ekranındayız, bir şey yapma
-                        }
-                        app.action == "open_apps_screen" -> {
-                            // Apps ekranına git
-                            val intent = Intent(context, MainActivity::class.java).apply {
-                                putExtra("screen", "apps")
-                                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            // Bottom bar altta ise en sonda göster
+            if (bottomBarPosition == BottomBarPosition.BOTTOM) {
+                UconnectBottomBar(
+                    bottomBarApps = appConfig.bottomBarApps.toMutableList(),
+                    appsList = appConfig.apps,
+                    onAppClick = { app ->
+                        when {
+                            app.action == "open_speed_screen" -> {
+                                // Zaten speed ekranındayız, bir şey yapma
                             }
-                            context.startActivity(intent)
-                        }
-                        !app.packageName.isNullOrEmpty() -> {
-                            // Uygulamayı başlat
-                            val launchIntent = context.packageManager.getLaunchIntentForPackage(app.packageName)
-                            if (launchIntent != null) {
-                                launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                context.startActivity(launchIntent)
+                            app.action == "open_apps_screen" -> {
+                                // Apps ekranına git
+                                val intent = Intent(context, MainActivity::class.java).apply {
+                                    putExtra("screen", "apps")
+                                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                }
+                                context.startActivity(intent)
                             }
-                        }
-                        !app.action.isNullOrEmpty() -> {
-                            // Sistem ayarlarını aç
-                            val intent = Intent(app.action)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            context.startActivity(intent)
+                            !app.packageName.isNullOrEmpty() -> {
+                                // Uygulamayı başlat
+                                val launchIntent = context.packageManager.getLaunchIntentForPackage(app.packageName)
+                                if (launchIntent != null) {
+                                    launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    context.startActivity(launchIntent)
+                                }
+                            }
+                            !app.action.isNullOrEmpty() -> {
+                                // Sistem ayarlarını aç
+                                val intent = Intent(app.action)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                context.startActivity(intent)
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
 } 

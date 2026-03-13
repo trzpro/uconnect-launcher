@@ -1,0 +1,154 @@
+{
+  "apps": [
+    {
+      "name": "Radio",
+      "iconResId": "ic_radio",
+      "packageName": "com.tw.radio",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Media",
+      "iconResId": "ic_media",
+      "packageName": "com.tw.music",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Camera",
+      "iconResId": "ic_camera",
+      "packageName": "com.tw.auxin",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "CarPlay",
+      "iconResId": "ic_carplay",
+      "packageName": "com.zjinnova.zlink",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Android Auto",
+      "iconResId": "ic_android_auto",
+      "packageName": "com.zjinnova.zlink",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Internet",
+      "iconResId": "ic_browser",
+      "packageName": "mark.via.gp",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Speed",
+      "iconResId": "ic_trip",
+      "packageName": null,
+      "action": "open_speed_screen",
+      "data": null
+    },
+    {
+      "name": "Files",
+      "iconResId": "ic_climate",
+      "packageName": "com.tw.twfileexplore",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Apps",
+      "iconResId": "ic_app",
+      "packageName": null,
+      "action": "open_apps_screen",
+      "data": null
+    },
+    {
+      "name": "Settings",
+      "iconResId": "ic_settings",
+      "packageName": null,
+      "action": "open_settings_screen",
+      "data": null
+    },
+    {
+      "name": "BT Connect",
+      "iconResId": "ic_controls",
+      "packageName": "com.tw.bt",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Vehicle",
+      "iconResId": "ic_car",
+      "packageName": "com.tw.auxin",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Video Player",
+      "iconResId": "ic_video",
+      "packageName": "com.tw.video",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "EQ",
+      "iconResId": "ic_eq",
+      "packageName": "com.tw.eq",
+      "action": null,
+      "data": null
+    }
+  ],
+  "bottomBarApps": [
+    {
+      "name": "Radio",
+      "iconResId": "ic_radio",
+      "packageName": "com.tw.radio",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Media",
+      "iconResId": "ic_media",
+      "packageName": "com.tw.eq",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Nav",
+      "iconResId": "ic_nav",
+      "packageName": "com.google.android.apps.maps",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Uconnect",
+      "iconResId": "ic_uconnect",
+      "packageName": "com.zjinnova.zlink",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Phone",
+      "iconResId": "ic_phone",
+      "packageName": "com.tw.bt",
+      "action": null,
+      "data": null
+    },
+    {
+      "name": "Settings",
+      "iconResId": "ic_settings",
+      "packageName": null,
+      "action": "open_settings_screen",
+      "data": null
+    },
+    {
+      "name": "Speed",
+      "iconResId": "ic_trip",
+      "packageName": null,
+      "action": "open_speed_screen",
+      "data": null
+    }
+  ]
+}
+

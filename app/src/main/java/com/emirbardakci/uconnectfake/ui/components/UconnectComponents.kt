@@ -64,7 +64,9 @@ fun UconnectBottomNavItem(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 6.dp, vertical = 2.dp)
             .clickable { onClick() }
     ) {
@@ -74,11 +76,13 @@ fun UconnectBottomNavItem(
             modifier = Modifier.size(36.dp),
             tint = tint
         )
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = label,
             color = tint,
             fontSize = 14.sp,
-            maxLines = 1
+            maxLines = 1,
+            textAlign = TextAlign.Center
         )
     }
 }

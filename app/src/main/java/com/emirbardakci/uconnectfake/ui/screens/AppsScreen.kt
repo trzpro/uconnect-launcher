@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,6 +37,7 @@ import com.emirbardakci.uconnectfake.MainActivity
 import com.emirbardakci.uconnectfake.R
 import com.emirbardakci.uconnectfake.ui.theme.UconnectRedLine
 import com.emirbardakci.uconnectfake.ui.theme.UconnectTextWhite
+import com.emirbardakci.uconnectfake.utils.loadAppConfig
 
 data class AppInfo(
     val name: String,
@@ -47,6 +49,10 @@ data class AppInfo(
 fun AppsScreen(onBackClick: () -> Unit) {
     val context = LocalContext.current
     var apps by remember { mutableStateOf(listOf<AppInfo>()) }
+    val appConfig = remember { loadAppConfig(context) }
+    
+    // Geri tuşu davranışı
+    BackHandler(onBack = onBackClick)
     
     // Uygulamaları yükle
     LaunchedEffect(Unit) {
@@ -155,6 +161,8 @@ fun AppsScreen(onBackClick: () -> Unit) {
             
             // Bottom bar
             UconnectBottomBar(
+                bottomBarApps = appConfig.bottomBarApps.toMutableList(),
+                appsList = appConfig.apps,
                 onAppClick = { app ->
                     when {
                         app.action == "open_speed_screen" -> {
